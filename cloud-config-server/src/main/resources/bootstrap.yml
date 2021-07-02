@@ -1,0 +1,31 @@
+server:
+  # config server port
+  port: 8086
+
+spring:
+  application:
+   # name of the application
+    name: CONFIG-SERVER
+   # available profiles of the application 
+  profiles:
+    active: development
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: false
+      server:
+        git:
+          # git url where the configurations are stored
+          uri: https://github.com/atsharmaosi/config-server
+          default-label: main
+          username: atsharmaosi@gmail.com
+          password: Papanemanakiya@123
+          cloneOnStart: true
+        bootstrap: true  
+
+management:
+  security:
+  # disable security of the config server
+    enabled: false
+  #check to check for git connectivity http://localhost:8086/spring-config-server/development

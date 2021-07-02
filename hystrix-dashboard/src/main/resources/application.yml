@@ -1,0 +1,12 @@
+server:
+  port : 8085
+
+spring:
+   application:
+      name: HISTRIX-DASHBOARD  
+   profiles:
+      active: development     
+            
+hystrix:
+   dashboard:
+      proxy-stream-allow-list: "*"

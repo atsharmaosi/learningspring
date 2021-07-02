@@ -1,0 +1,44 @@
+server:
+  port: 8084
+  
+spring:
+  application:
+    name: API-GATEWAY
+  profiles:
+      active: development         
+  cloud:
+    gateway:
+      routes:
+      - id: DEPARTMENT-SERVICE
+        uri: lb://DEPARTMENT-SERVICE
+        predicates:
+            - Path=/department/**
+        filters:
+        - name: Hystrix
+          args:
+            name: DEPARTMENT-SERVICE
+            fallbackuri: forward:/departmentServiceFallBack
+      - id: USER-SERVICE
+        uri: lb://USER-SERVICE
+        predicates:
+            - Path=/users/**
+        filters:
+        - name: Hystrix
+          args:
+            name: USER-SERVICE
+            fallbackuri: forward:/userServiceFallBack
+            
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+            
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+        
